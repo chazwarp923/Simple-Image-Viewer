@@ -6,33 +6,44 @@ package com.chazwarp.siv;
 import java.io.File;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.chazwarp.siv.Window.FileChooserWindow;
 import com.chazwarp.siv.Window.MainWindow;
 
 public class Main {
 	
-	static int windowX = 800;
-	static int windowY = 600;
 	static JFrame mainFrame = null;
 	static File currentImage = null;
 	
 	public static void main(String[] args) {
 		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		CreateNewWindow();
 	}
 	
 	public static void CreateNewWindow() {
-		mainFrame = MainWindow.CreateWindow(windowX, windowY);
-		MainWindow.ChangeVisibility(mainFrame, true);
+		mainFrame = MainWindow.CreateWindow();
+		mainFrame.setVisible(true);
 	}
 	
 	public static void openImage() {
 		currentImage = FileChooserWindow.OpenNewImage();
 		
 		if(currentImage != null) {
-			MainWindow.ChangeVisibility(mainFrame, false);
-			MainWindow.OpenNewImage(mainFrame, currentImage.getAbsolutePath());
+			mainFrame.setVisible(false);
+			MainWindow.OpenNewImage(currentImage.getAbsolutePath());
 		}
 	}
 	
