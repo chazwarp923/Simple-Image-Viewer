@@ -5,6 +5,8 @@ package com.chazwarp.siv.Window;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
@@ -22,7 +24,8 @@ public class MainWindow {
 	
 	static JFrame mainFrame = new JFrame("Simple Image Viewer");
 	static Toolkit tk = Toolkit.getDefaultToolkit();
-	static JPanel picPanel;
+	static JPanel mainPanel;
+	static GridBagConstraints c;
 	static JMenuBar menuBar;
 	static JMenu optionsMenu;
 	static JMenuItem openNewImage;
@@ -38,7 +41,8 @@ public class MainWindow {
 		}
 		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		picPanel = new JPanel();
+		mainPanel = new JPanel(new GridBagLayout());
+		c = new GridBagConstraints();
 		menuBar = new JMenuBar();
 		mainFrame.setJMenuBar(menuBar);
 		optionsMenu = new JMenu("Options");
@@ -47,8 +51,13 @@ public class MainWindow {
 		openNewImage.addActionListener(new OpenNewImageListener());
 		optionsMenu.add(openNewImage);
 		
-		mainFrame.add(new ButtonBar());
-		mainFrame.add(picPanel);
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridy = 1;
+		c.ipady = 10;
+		
+		mainPanel.add(ButtonBar.InstantiateButtonBar(mainPanel), c);
+		mainFrame.add(mainPanel);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		mainFrame.setBounds(0, 0, screenSize.width/2, screenSize.height/2);
@@ -70,16 +79,10 @@ public class MainWindow {
 	
 	public static void OpenNewImage(String filePath) {
 		
-		if(oldImage != null)picPanel.remove(oldImage);
-		oldImage = picPanel.add(new JLabel(new ImageIcon(filePath)));
+		if(oldImage != null) mainPanel.remove(oldImage);
 		
-		mainFrame.setVisible(true);
-	}
-	
-	public static void SetCurrentImage(String filePath) {
-		if(oldImage != null)picPanel.remove(oldImage);
-		oldImage = picPanel.add(new JLabel(new ImageIcon(filePath)));
-		mainFrame.setVisible(false);
+		oldImage = mainPanel.add(new JLabel(new ImageIcon(filePath)));
+		
 		mainFrame.setVisible(true);
 	}
 }
