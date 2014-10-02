@@ -7,7 +7,7 @@
 	<App>
 	  <Name>Simple Image Viewer</Name>
 	  <LogoPNG>src/logo.png</LogoPNG>
-	  <MainClass>jwrapper.SampleApp</MainClass>
+	  <MainClass>com.chazwarp.siv.Main</MainClass>
 	  <Param>one</Param>
 	  <Param>two</Param>
 	</App>
