@@ -6,7 +6,7 @@
 	<!-- The specification for one app within the bundle -->
 	<App>
 	  <Name>Simple Image Viewer</Name>
-	  <LogoPNG>src/logo.png</LogoPNG>
+	  <LogoPNG>com.chazwarp.siv.resources.monitor32</LogoPNG>
 	  <MainClass>com.chazwarp.siv.Main</MainClass>
 	  <Param>one</Param>
 	  <Param>two</Param>
@@ -18,8 +18,8 @@
 	<InstallType>CurrentUser</InstallType>
 	
 	<!-- Splash and Logo -->
-	<SplashPNG>src/splash.png</SplashPNG>
-	<BundleLogoPNG>src/logo.png</BundleLogoPNG>
+	<SplashPNG>com.chazwarp.siv.resources.monitor32</SplashPNG>
+	<BundleLogoPNG>com.chazwarp.siv.resources.monitor32</BundleLogoPNG>
 	
 	<!-- JVM options (e.g. extra memory) -->
 	<JvmOptions>
