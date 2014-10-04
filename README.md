@@ -1,2 +1,0 @@
-Simple-Image-Viewer
-===================
