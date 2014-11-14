@@ -32,7 +32,7 @@ public class ButtonBar {
 	protected static void addButtons(JToolBar toolBar) {
 		JButton button = null;
 		
-		button = makeButton("leftArrow32", PREVIOUS, "Back!", "Back");
+		button = makeButton("leftArrow32", PREVIOUS, "Previous!", "Previous");
 		toolBar.add(button);
 		button = makeButton("rightArrow32", NEXT, "Next!", "Next");
 		toolBar.add(button);

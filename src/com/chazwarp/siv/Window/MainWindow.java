@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
@@ -55,6 +56,7 @@ public class MainWindow {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridy = 1;
 		c.ipady = 10;
+		c.insets = new Insets(10, 0, 0, 0);
 		
 		mainPanel.add(ButtonBar.InstantiateButtonBar(mainPanel), c);
 		mainFrame.add(mainPanel);
@@ -77,8 +79,7 @@ public class MainWindow {
 		}
 	}
 	
-	public static void OpenNewImage(String filePath) {
-		
+	public static void OpenNewImage(String filePath) {		
 		if(oldImage != null) mainPanel.remove(oldImage);
 		
 		oldImage = mainPanel.add(new JLabel(new ImageIcon(filePath)));
