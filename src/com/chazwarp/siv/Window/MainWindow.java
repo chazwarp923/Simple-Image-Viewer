@@ -48,14 +48,17 @@ public class MainWindow {
 		mainFrame.setJMenuBar(menuBar);
 		optionsMenu = new JMenu("Options");
 		menuBar.add(optionsMenu);
-		openNewImage = new JMenuItem("Open A New Image");
+		openNewImage = new JMenuItem("Open Image");
 		openNewImage.addActionListener(new OpenNewImageListener());
 		optionsMenu.add(openNewImage);
 		
+		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.PAGE_END;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridy = 1;
 		c.ipady = 10;
+		c.weightx = 1;
+		c.weighty = 1;
 		c.insets = new Insets(10, 0, 0, 0);
 		
 		mainPanel.add(ButtonBar.InstantiateButtonBar(mainPanel), c);

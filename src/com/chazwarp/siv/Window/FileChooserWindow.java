@@ -26,8 +26,7 @@ public class FileChooserWindow {
 			return chooser.getSelectedFile();
 		}
 		else {
-			
+			return null;
 		}
-		return chooser.getSelectedFile();	
 	}
 }
