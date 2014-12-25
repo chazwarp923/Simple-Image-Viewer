@@ -5,11 +5,9 @@ package com.chazwarp.siv.Window;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.Toolkit;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,17 +15,22 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import com.chazwarp.siv.JPanel.ButtonBar;
 import com.chazwarp.siv.Window.Button.Listeners.OpenNewImageListener;
 
 public class MainWindow {
 	
-	static JFrame mainFrame = new JFrame("Simple Image Viewer");
+	static JFrame mainWindow = new JFrame("Simple Image Viewer");
 	static Toolkit tk = Toolkit.getDefaultToolkit();
-	static JPanel mainPanel;
-	static GridBagConstraints c;
-	static JMenuBar menuBar;
+	static Dimension screenSize = tk.getScreenSize();
+	static JPanel mainPanel = new JPanel();
+	static JPanel imagePanel = new JPanel();
+	static JPanel toolBarPanel = new JPanel();
+	static JScrollPane scrollBars = new JScrollPane(imagePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+	static JMenuBar menuBar = new JMenuBar();
 	static JMenu optionsMenu;
 	static JMenuItem openNewImage;
 	static Component oldImage = null;
@@ -35,43 +38,38 @@ public class MainWindow {
 	public static JFrame CreateWindow() {
 		
 		try {
-			mainFrame.setIconImage(createImageIcon("/com/chazwarp/siv/resources/monitor32.png").getImage());
+			mainWindow.setIconImage(createImageIcon("/com/chazwarp/siv/resources/monitor32.png").getImage());
 		}
 		catch(NullPointerException e) {
 			e.printStackTrace();
 		}
 		
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainPanel = new JPanel(new GridBagLayout());
-		c = new GridBagConstraints();
-		menuBar = new JMenuBar();
-		mainFrame.setJMenuBar(menuBar);
+		mainWindow.setJMenuBar(menuBar);
 		optionsMenu = new JMenu("Options");
 		menuBar.add(optionsMenu);
 		openNewImage = new JMenuItem("Open Image");
 		openNewImage.addActionListener(new OpenNewImageListener());
 		optionsMenu.add(openNewImage);
 		
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.PAGE_END;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridy = 1;
-		c.ipady = 10;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.insets = new Insets(10, 0, 0, 0);
+		scrollBars.getVerticalScrollBar().setUnitIncrement(10);
+		mainPanel.add(scrollBars);
+		Component tempComponent = ButtonBar.InstantiateButtonBar(mainPanel);
+		toolBarPanel.add(tempComponent);
+		Dimension tempDim = tempComponent.getPreferredSize();
+		toolBarPanel.setMaximumSize(new Dimension(screenSize.width, tempDim.height));
+		mainPanel.add(toolBarPanel);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		
-		mainPanel.add(ButtonBar.InstantiateButtonBar(mainPanel), c);
-		mainFrame.add(mainPanel);
-		
+		mainWindow.add(mainPanel);
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		mainFrame.setBounds(0, 0, screenSize.width/2, screenSize.height/2);
-		mainFrame.setLocationRelativeTo(null);//Centers The Window
+		mainWindow.setBounds(0, 0, screenSize.width/2, screenSize.height/2);
+		mainWindow.setLocationRelativeTo(null);//Centers The Window
 		
-		return mainFrame;
+		return mainWindow;
 	}
 	
-	protected static ImageIcon createImageIcon(String path) {
+	private static ImageIcon createImageIcon(String path) {
 		java.net.URL imgURL = MainWindow.class.getResource(path);
 		if(imgURL != null) {
 			return new ImageIcon(imgURL);
@@ -83,10 +81,10 @@ public class MainWindow {
 	}
 	
 	public static void OpenNewImage(String filePath) {		
-		if(oldImage != null) mainPanel.remove(oldImage);
+		if(oldImage != null) imagePanel.remove(oldImage);
 		
-		oldImage = mainPanel.add(new JLabel(new ImageIcon(filePath)));
+		oldImage = imagePanel.add(new JLabel(new ImageIcon(filePath)));
 		
-		mainFrame.setVisible(true);
+		mainWindow.setVisible(true);
 	}
 }
