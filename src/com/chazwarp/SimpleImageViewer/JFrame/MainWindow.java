@@ -1,11 +1,13 @@
 /**
 @author Chaz Kerby
 */
-package com.chazwarp.siv.Window;
+package com.chazwarp.SimpleImageViewer.JFrame;
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.net.URL;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -18,8 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import com.chazwarp.siv.JPanel.ButtonBar;
-import com.chazwarp.siv.Window.Button.Listeners.OpenNewImageListener;
+import com.chazwarp.SimpleImageViewer.JPanel.ButtonBar;
+import com.chazwarp.SimpleImageViewer.Listener.ButtonBarListener;
+import com.chazwarp.SimpleImageViewer.Listener.OpenNewImageListener;
 
 public class MainWindow {
 	
@@ -34,11 +37,12 @@ public class MainWindow {
 	static JMenu optionsMenu;
 	static JMenuItem openNewImage;
 	static Component oldImage = null;
+	public static File currentImage;
 	
-	public static JFrame CreateWindow() {
+	public static JFrame CreateWindow(File f) {
 		
 		try {
-			mainWindow.setIconImage(createImageIcon("/com/chazwarp/siv/resources/monitor32.png").getImage());
+			mainWindow.setIconImage(createImageIcon("/resources/monitor32.png").getImage());
 		}
 		catch(NullPointerException e) {
 			e.printStackTrace();
@@ -66,11 +70,15 @@ public class MainWindow {
 		mainWindow.setBounds(0, 0, screenSize.width/2, screenSize.height/2);
 		mainWindow.setLocationRelativeTo(null);//Centers The Window
 		
+		if(f != null) {
+			OpenNewImage(f);
+		}
+		
 		return mainWindow;
 	}
 	
 	private static ImageIcon createImageIcon(String path) {
-		java.net.URL imgURL = MainWindow.class.getResource(path);
+		URL imgURL = MainWindow.class.getResource(path);
 		if(imgURL != null) {
 			return new ImageIcon(imgURL);
 		}
@@ -80,10 +88,19 @@ public class MainWindow {
 		}
 	}
 	
-	public static void OpenNewImage(String filePath) {		
+	public static void OpenNewImage(File image) {		
 		if(oldImage != null) imagePanel.remove(oldImage);
+		currentImage = image;
 		
-		oldImage = imagePanel.add(new JLabel(new ImageIcon(filePath)));
+		oldImage = imagePanel.add(new JLabel(new ImageIcon(image.getAbsolutePath())));
+		imagePanel.repaint();
+		
+		File[] tempArray = ButtonBarListener.GetArray();
+		for(int i = 0; i < tempArray.length; i++) {
+			if(tempArray[i] == image) {
+				ButtonBarListener.arrayPos = i;
+			}
+		}
 		
 		mainWindow.setVisible(true);
 	}

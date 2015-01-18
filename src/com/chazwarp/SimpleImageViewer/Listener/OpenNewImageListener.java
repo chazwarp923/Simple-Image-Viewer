@@ -1,12 +1,12 @@
 /**
 @author Chaz Kerby
 */
-package com.chazwarp.siv.Window.Button.Listeners;
+package com.chazwarp.SimpleImageViewer.Listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.chazwarp.siv.Main;
+import com.chazwarp.SimpleImageViewer.Main;
 
 public class OpenNewImageListener implements ActionListener {
 

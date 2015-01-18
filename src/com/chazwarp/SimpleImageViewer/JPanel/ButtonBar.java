@@ -1,7 +1,7 @@
 /**
 @author Chaz Kerby
 */
-package com.chazwarp.siv.JPanel;
+package com.chazwarp.SimpleImageViewer.JPanel;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,13 +12,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
-import com.chazwarp.siv.Window.Button.Listeners.ButtonBarListener;
+import com.chazwarp.SimpleImageViewer.Listener.ButtonBarListener;
 
 public class ButtonBar {
 
 	static Toolkit tk = Toolkit.getDefaultToolkit();
-	static final private String PREVIOUS = "Previous";
-	static final private String NEXT = "Next";
+	static final public String PREVIOUS = "Previous";
+	static final public String NEXT = "Next";
 
 	public static JToolBar InstantiateButtonBar(JPanel panel) {
 		JToolBar toolBar = new JToolBar("ToolBar", JToolBar.HORIZONTAL);

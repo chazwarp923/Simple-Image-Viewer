@@ -1,7 +1,7 @@
 /**
 @author Chaz Kerby
 */
-package com.chazwarp.siv;
+package com.chazwarp.SimpleImageViewer;
 
 import java.io.File;
 
@@ -9,13 +9,14 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.chazwarp.siv.Window.FileChooserWindow;
-import com.chazwarp.siv.Window.MainWindow;
+import com.chazwarp.SimpleImageViewer.JFrame.FileChooserWindow;
+import com.chazwarp.SimpleImageViewer.JFrame.MainWindow;
 
 public class Main {
 	
 	static JFrame mainFrame = null;
 	static File currentImage = null;
+	static File openedFile = null;
 	
 	public static void main(String[] args) {
 		
@@ -24,12 +25,28 @@ public class Main {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		CreateNewWindow();
+		
+		if(args.length > 0) {
+			openedFile = new File(args[0]);
+			CreateNewWindow(openedFile);		
+		}
+		
+		else {
+			CreateNewWindow(null);
+		}
 	}
 	
-	public static void CreateNewWindow() {
-		mainFrame = MainWindow.CreateWindow();
-		mainFrame.setVisible(true);
+	public static void CreateNewWindow(File f) {
+		
+		if(f != null) {
+			mainFrame = MainWindow.CreateWindow(f);
+			mainFrame.setVisible(true);
+		}
+		
+		else {
+			mainFrame = MainWindow.CreateWindow(null);
+			mainFrame.setVisible(true);
+		}
 	}
 	
 	public static void openImage() {
@@ -37,7 +54,7 @@ public class Main {
 		
 		if(currentImage != null) {
 			mainFrame.setVisible(false);
-			MainWindow.OpenNewImage(currentImage.getAbsolutePath());
+			MainWindow.OpenNewImage(currentImage);
 		}
 	}
 	
