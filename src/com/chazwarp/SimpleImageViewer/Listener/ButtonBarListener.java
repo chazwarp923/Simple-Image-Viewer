@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
 
 import com.chazwarp.SimpleImageViewer.JFrame.MainWindow;
 import com.chazwarp.SimpleImageViewer.JPanel.ButtonBar;
@@ -17,23 +18,27 @@ public class ButtonBarListener implements ActionListener{
 	static private File image;
 	static private File parentDir;
 	static private File[] fileArray;
+	static private boolean arrayPopulated = false;
 	
 	@Override
     public void actionPerformed(ActionEvent ae) {
         String cmd = ae.getActionCommand();
         
-        PopulateArray();
-        
-        for(int i=0; i < fileArray.length; i++) {
-        	if(image == fileArray[i]) {
-        		arrayPos = i;
-        	}
+        if(arrayPopulated == false) {
+        	PopulateArray();
+        	
+        	for(int i=0; i < fileArray.length; i++) {
+            	if(image.getName().equals(fileArray[i].getName())) {
+            		arrayPos = i;
+            	}
+            }
+        	arrayPopulated = true;
         }
         
         if (ButtonBar.PREVIOUS == cmd) {
         	if(arrayPos != 0) {
-        		MainWindow.OpenNewImage(fileArray[arrayPos - 1]);
-                arrayPos = arrayPos - 1;
+        		MainWindow.OpenNewImage(fileArray[arrayPos-1]);
+        		arrayPos = arrayPos -1;
         	}
         	else {
         		MainWindow.OpenNewImage(fileArray[fileArray.length - 1]);
@@ -42,8 +47,8 @@ public class ButtonBarListener implements ActionListener{
         } 
         else if (ButtonBar.NEXT == cmd) {
         	if(arrayPos != fileArray.length - 1) {
-        		MainWindow.OpenNewImage(fileArray[arrayPos + 1]);
-            	arrayPos = arrayPos + 1;
+        		MainWindow.OpenNewImage(fileArray[arrayPos+1]);
+        		arrayPos = arrayPos + 1;
         	}
         	else {
         		MainWindow.OpenNewImage(fileArray[0]);
@@ -69,6 +74,7 @@ public class ButtonBarListener implements ActionListener{
 		image = MainWindow.currentImage;
         parentDir = image.getParentFile();
         fileArray = parentDir.listFiles(filter);
+        Arrays.sort(fileArray);
 	}
 	
 	public static File[] GetArray() {

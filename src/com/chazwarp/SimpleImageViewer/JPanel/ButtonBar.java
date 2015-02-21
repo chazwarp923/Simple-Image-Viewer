@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 
 import com.chazwarp.SimpleImageViewer.Listener.ButtonBarListener;
 
@@ -32,15 +33,15 @@ public class ButtonBar {
 	protected static void addButtons(JToolBar toolBar) {
 		JButton button = null;
 		
-		button = makeButton("leftArrow32", PREVIOUS, "Previous!", "Previous");
+		button = makeButton("leftArrow32", PREVIOUS, "Previous!", "Previous", KeyStroke.getKeyStroke("LEFT"));
 		toolBar.add(button);
-		button = makeButton("rightArrow32", NEXT, "Next!", "Next");
+		button = makeButton("rightArrow32", NEXT, "Next!", "Next", KeyStroke.getKeyStroke("RIGHT"));
 		toolBar.add(button);
 	}
 	
-	protected static JButton makeButton(String imageName, String actionCommand, String toolTipText, String altText) {
+	protected static JButton makeButton(String imageName, String actionCommand, String toolTipText, String altText, KeyStroke keyStroke) {
 		
-		URL url = ButtonBar.class.getResource("/com/chazwarp/siv/resources/"+ imageName + ".png");
+		URL url = ButtonBar.class.getResource("/resources/"+ imageName + ".png");
 		Image img = tk.createImage(url);
 		tk.prepareImage(img, -1, -1, null);
 		
@@ -48,6 +49,7 @@ public class ButtonBar {
 		button.setActionCommand(actionCommand);
 		button.setToolTipText(toolTipText);
 		button.addActionListener(new ButtonBarListener());
+		button.getInputMap().put(keyStroke, actionCommand);
 		
 		if(img != null) {
 			button.setIcon(new ImageIcon(img, altText));

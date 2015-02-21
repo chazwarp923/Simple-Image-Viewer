@@ -5,9 +5,10 @@ package com.chazwarp.SimpleImageViewer.JFrame;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.io.File;
-import java.net.URL;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import com.chazwarp.JWarpCore.File.IconHelper;
 import com.chazwarp.SimpleImageViewer.JPanel.ButtonBar;
 import com.chazwarp.SimpleImageViewer.Listener.ButtonBarListener;
 import com.chazwarp.SimpleImageViewer.Listener.OpenNewImageListener;
@@ -30,7 +32,7 @@ public class MainWindow {
 	static Toolkit tk = Toolkit.getDefaultToolkit();
 	static Dimension screenSize = tk.getScreenSize();
 	static JPanel mainPanel = new JPanel();
-	static JPanel imagePanel = new JPanel();
+	static JPanel imagePanel = new JPanel(new GridBagLayout());
 	static JPanel toolBarPanel = new JPanel();
 	static JScrollPane scrollBars = new JScrollPane(imagePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 	static JMenuBar menuBar = new JMenuBar();
@@ -41,12 +43,7 @@ public class MainWindow {
 	
 	public static JFrame CreateWindow(File f) {
 		
-		try {
-			mainWindow.setIconImage(createImageIcon("/resources/monitor32.png").getImage());
-		}
-		catch(NullPointerException e) {
-			e.printStackTrace();
-		}
+		IconHelper.setWindowIcon(mainWindow, "/resources/" + "monitor32.png");
 		
 		mainWindow.setJMenuBar(menuBar);
 		optionsMenu = new JMenu("Options");
@@ -66,26 +63,16 @@ public class MainWindow {
 		
 		mainWindow.add(mainPanel);
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		mainWindow.setBounds(0, 0, screenSize.width/2, screenSize.height/2);
-		mainWindow.setLocationRelativeTo(null);//Centers The Window
+		Dimension screenSize = tk.getScreenSize();
+		Dimension minSize = new Dimension(screenSize.width/2, screenSize.height/2);
+		mainWindow.setMinimumSize(minSize);
+		mainWindow.setExtendedState(Frame.MAXIMIZED_BOTH);
 		
 		if(f != null) {
 			OpenNewImage(f);
 		}
 		
 		return mainWindow;
-	}
-	
-	private static ImageIcon createImageIcon(String path) {
-		URL imgURL = MainWindow.class.getResource(path);
-		if(imgURL != null) {
-			return new ImageIcon(imgURL);
-		}
-		else {
-			System.err.println("Couldn't Find File: " + path);
-			return null;
-		}
 	}
 	
 	public static void OpenNewImage(File image) {		
@@ -100,8 +87,7 @@ public class MainWindow {
 			if(tempArray[i] == image) {
 				ButtonBarListener.arrayPos = i;
 			}
-		}
-		
+		}		
 		mainWindow.setVisible(true);
 	}
 }
