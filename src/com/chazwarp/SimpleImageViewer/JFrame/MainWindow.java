@@ -41,7 +41,7 @@ public class MainWindow {
 	static Component oldImage = null;
 	public static File currentImage;
 	
-	public static JFrame CreateWindow(File f) {
+	public static JFrame createWindow(File f) {
 		
 		IconHelper.setWindowIcon(mainWindow, "/resources/" + "monitor32.png");
 		

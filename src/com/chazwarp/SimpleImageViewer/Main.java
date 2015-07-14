@@ -39,12 +39,12 @@ public class Main {
 	public static void CreateNewWindow(File f) {
 		
 		if(f != null) {
-			mainFrame = MainWindow.CreateWindow(f);
+			mainFrame = MainWindow.createWindow(f);
 			mainFrame.setVisible(true);
 		}
 		
 		else {
-			mainFrame = MainWindow.CreateWindow(null);
+			mainFrame = MainWindow.createWindow(null);
 			mainFrame.setVisible(true);
 		}
 	}
