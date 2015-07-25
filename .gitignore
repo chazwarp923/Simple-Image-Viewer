@@ -2,6 +2,9 @@
 .settings/
 .classpath
 .project
+bin/
+target/
+
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -26,7 +29,8 @@ hs_err_pid*
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -53,5 +57,3 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
-/bin
-/target/
