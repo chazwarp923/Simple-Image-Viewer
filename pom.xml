@@ -46,6 +46,12 @@
 	</plugin>
     </plugins>
   </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.chazwarp.JWarpCore</groupId>
+  		<artifactId>JWarpCore</artifactId>
+  	</dependency>
+  </dependencies>
   <dependencyManagement>
   	<dependencies>
   		<dependency>
