@@ -46,10 +46,13 @@
 	</plugin>
     </plugins>
   </build>
-  <parent>
-  	<groupId>com.chazwarp.JWarpCore</groupId>
-  	<artifactId>JWarpCore</artifactId>
-  	<version>0.1-SNAPSHOT</version>
-  	<relativePath></relativePath>
-  </parent>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>com.chazwarp.JWarpCore</groupId>
+  			<artifactId>JWarpCore</artifactId>
+  			<version>0.1-SNAPSHOT</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
